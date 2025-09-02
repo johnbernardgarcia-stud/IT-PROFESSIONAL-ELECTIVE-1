@@ -1,0 +1,63 @@
+package com.example.lifecycleexample;
+
+import android.os.Bundle;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity { 
+
+     private static final String TAG = "LifecycleExample";
+     
+     @Override 
+      protected void onCreate(Bundle savedInstanceState) { 
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_main); // sets the layout for the activity
+    
+       // Code to run when the activity is created
+       Log.d(TAG, "onCreate called!");
+
+       // Example: initialize UI components, variables, etc.
+
+       @Override
+        protected void onStart() {
+        super.onStart(); 
+        // Code to run when the activity becomes visible to the user
+        Log.d(TAG, "onStart called!"); 
+
+        // You can start animations, refresh UI, or resume resources here
+
+        @Override 
+         protected void onResume() { 
+         super.onResume(); 
+         // Code to run when the activity has become interactive
+         Log.d(TAG, "onResume called!");
+
+         // You can restart animations, refresh data, or resume tasks here
+
+         @Override 
+          protected void onPause() {
+          super.onPause(); 
+          // Code to run when the activity is about to go into the background 
+          Log.d(TAG, "onPause called!");
+    
+          // You can pause animations, save data, or release resources here
+
+          @Override protected void onStop() {
+           super.onStop(); 
+           // Code to run when the activity is no longer visible to the user 
+           Log.d(TAG, "onStop called!"); 
+    
+           // You can release resources, stop animations, or save data here
+
+
+
+         @Override
+          protected void onDestroy() {
+          super.onDestroy();
+          // Code to run when the activity is about to be destroyed
+           Log.d(TAG, "onDestroy called!");
+
+           // You can clean up resources, stop threads, or close database connections here
+
+  }
+} 
