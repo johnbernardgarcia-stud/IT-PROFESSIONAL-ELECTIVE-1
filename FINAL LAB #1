@@ -1,0 +1,126 @@
+EXERCISE 1 CODE:
+-MainActivity.java
+package com.example.mainactivity;
+
+import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+    }
+}
+
+-activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to android UI"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+-----------------------------------------------
+EXERCISE 5 CODE:
+-MainActivity.java
+package com.example.mainactivity;
+
+import android.os.Bundle;
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
+import android.widget.ViewSwitcher;
+
+public class MainActivity extends AppCompatActivity {
+    int imageList []= {R.drawable.ten, R.drawable.nine};
+    int currentIndex= 0;
+    ImageSwitcher imageSwitcher;
+    Button btnSwitch;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        imageSwitcher = findViewById(R.id.imageSwitcher);
+        btnSwitch = findViewById(R.id.btnSwitch);
+
+        imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                ImageView imageView = new ImageView(MainActivity.this);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                return imageView;
+            }
+        });
+        imageSwitcher.setImageResource(imageList[currentIndex]);
+
+        btnSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentIndex = (currentIndex + 1) % imageList.length;
+                imageSwitcher.setImageResource(imageList[currentIndex]);
+            }
+        });
+    }
+}
+
+-activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:gravity="center"
+android:padding="20dp">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/eps"
+        android:contentDescription="Sample Image"
+        android:layout_marginBottom="20dp"/>
+
+    <ImageSwitcher
+        android:id="@+id/imageSwitcher"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10PM"/>
+</LinearLayout>
